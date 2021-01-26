@@ -3,11 +3,12 @@ package app;
 import io.javalin.Javalin;
 import io.javalin.http.Handler;
 
+
 public class Server {
 
     private static Handler apiHandler = ctx -> {
         System.out.println("api path");
-        ctx.result("api");
+        ctx.result("api call");
     };
 
     public static void main(String[] args) {
