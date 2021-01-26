@@ -1,9 +1,11 @@
+package app;
+
 import io.javalin.Javalin;
 import io.javalin.http.Handler;
 
-public class HelloWorld {
+public class HelloWorldApp {
 
-    static Handler apiHandler = ctx -> {
+    private static Handler apiHandler = ctx -> {
         System.out.println("api path");
         ctx.result("api");
     };
