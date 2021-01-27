@@ -1,0 +1,59 @@
+      body {
+        margin: 0;
+        height: 1000px;
+      }
+
+      #app {
+        margin: auto;
+        border-left: 5px double indianred;
+        border-right: 5px double indianred;
+        height: 100%;
+        width: 1000px;
+        text-align: center;
+        font-size: large;
+      }
+
+      .title {
+        padding-top: 50px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: xx-large;
+        font-weight: bolder;
+        color: indianred;
+      }
+
+      table {
+        margin: auto;
+        padding-top: 50px;
+        border-spacing: 20px;
+        border-collapse: separate;
+      }
+
+      button {
+        display: inline-block;
+        padding: 2px;
+        width: 900px;
+        font-size: large;
+        font-weight: bold;
+        color: white;
+        background-color: indianred;
+      }
+
+      input,
+      select {
+        font-size: large;
+        text-align: center;
+      }
+
+      td {
+        text-align: center;
+      }
+
+      .result {
+        border-bottom: 1px dotted gray;
+        color: gray;
+      }
+
+      [data-qa-test="result"] {
+        color: crimson;
+        font-weight: bold;
+      }
