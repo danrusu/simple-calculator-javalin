@@ -1,1 +1,1 @@
-web: java -jar ./target/banking-app-1.0-jar-with-dependencies.jar
+web: java -jar ./target/simple-calculator-javalin-1.0-jar-with-dependencies.jar
