@@ -1,19 +1,17 @@
 package app;
 
 import io.javalin.Javalin;
-import io.javalin.http.Handler;
+import lombok.extern.slf4j.Slf4j;
 
+import static app.HomePage.getHtmlIndex;
 
+@Slf4j
 public class Server {
-
-    private static Handler apiHandler = ctx -> {
-        System.out.println("api path");
-        ctx.result("api call");
-    };
 
     public static void main(String[] args) {
         Javalin app = Javalin.create().start(7000);
-        app.get("/", ctx -> ctx.result("Hello World"));
-        app.get("/api", apiHandler);
+        app.get("/", ctx -> ctx.html(getHtmlIndex()));
+        app.get("/api/calculate", SimpleCalculator::calculateHandler);
     }
+    
 }

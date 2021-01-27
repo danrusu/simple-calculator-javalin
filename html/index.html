@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple.Calculator</title>
+    <style>
+      body {
+        margin: 0;
+        height: 1000px;
+      }
+
+      #app {
+        margin: auto;
+        border-left: 5px double indianred;
+        border-right: 5px double indianred;
+        height: 100%;
+        width: 1000px;
+        text-align: center;
+        font-size: large;
+      }
+
+      .title {
+        padding-top: 50px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: xx-large;
+        font-weight: bolder;
+        color: indianred;
+      }
+
+      table {
+        margin: auto;
+        padding-top: 50px;
+        border-spacing: 20px;
+        border-collapse: separate;
+      }
+
+      button {
+        display: inline-block;
+        padding: 2px;
+        width: 900px;
+        font-size: large;
+        font-weight: bold;
+        color: white;
+        background-color: indianred;
+      }
+
+      input,
+      select {
+        font-size: large;
+        text-align: center;
+      }
+
+      td {
+        text-align: center;
+      }
+
+      .result {
+        border-bottom: 1px dotted gray;
+        color: gray;
+      }
+
+      [data-qa-test="result"] {
+        color: crimson;
+        font-weight: bold;
+      }
+
+
+
+
+    </style>
+</head>
+
+<body>
+
+<div id="app">
+    <div class="title">Simple_calculator</div>
+    <table>
+        <tr>
+            <td><label>Number 1 </label><input id="nr1" type="number"/></td>
+            <td><label>Number 2 </label><input id="nr2" type="number"/></td>
+            <td>
+                <label>Operation </label>
+                <select class="operation-selector">
+                    <option value="1">SUM</option>
+                    <option value="2">MULTIPLICATION</option>
+                    <option value="3">DIVISION</option>
+                </select>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <button name="calculate" onclick="setTimeout(calculate, 500);">CALCULATE</button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" class="result">RESULT: <span data-qa-test="result"></span></td>
+        </tr>
+    </table>
+</div>
+
+<script>
+
+      setTimeout(() => document.querySelector('title').innerText = 'SimpleCalculator', 1000);
+      setTimeout(() => document.querySelector('#app .title').innerText = 'Simple calculator', 500);
+
+
+      const reset = () => {
+        document.getElementById('nr1').value = 0;
+        document.getElementById('nr2').value = 0;
+      }
+
+      const updateResult = value => {
+        document.querySelector('[data-qa-test="result"]').innerHTML = value;
+      };
+
+      const calculate = () => {
+        // get web elements
+        const nr1Element = document.getElementById('nr1');
+        const nr2Element = document.getElementById('nr2');
+        const operationElement = document.querySelector('.operation-selector');
+
+        const nr1 = nr1Element.value ? parseInt(nr1Element.value) : '';
+        const nr2 = nr2Element.value ? parseInt(nr2Element.value) : '';
+        const operationId = parseInt(operationElement.value);
+
+        const calculateUrl = '/api/calculate';
+        const urlParams = `firstNumber=${nr1}&secondNumber=${nr2}&operation=${operationId}`;
+        const requestUrl = `${calculateUrl}?${urlParams}`;
+
+
+        fetch(requestUrl)
+          .then(response => response.json())
+          .then(json => updateResult(json.result))
+          .catch(err => console.error(err));
+      };
+
+
+</script>
+
+</body>
+
+</html>

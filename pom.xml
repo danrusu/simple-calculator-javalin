@@ -15,6 +15,7 @@
 
         <!-- dependencies -->
         <junit.jupiter.version>5.6.0-M1</junit.jupiter.version>
+        <rest-assured.version>4.3.1</rest-assured.version>
 
         <!-- plugins -->
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
@@ -77,6 +78,19 @@
             <artifactId>junit-jupiter-params</artifactId>
             <version>${junit.jupiter.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <!--HTTP client + JSON-->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${rest-assured.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.11.1</version>
         </dependency>
 
         <!-- surefire-report -->
