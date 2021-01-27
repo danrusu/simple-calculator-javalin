@@ -7,10 +7,12 @@ import io.javalin.http.Context;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.Float.parseFloat;
 import static java.util.Arrays.asList;
+import static java.util.Arrays.stream;
 
 @Slf4j
 public class SimpleCalculator {
@@ -26,17 +28,15 @@ public class SimpleCalculator {
 
     @SneakyThrows
     public static void calculateHandler(Context ctx) {
-        String resultText = "One number input is empty";
-        String firstNumber = ctx.queryParam(FIRST_NUMBER_QUERY_VAR_NAME)
-                .replace("e", "");
-        String secondNumber = ctx.queryParam(SECOND_NUMBER_QUERY_VAR_NAME)
-                .replace("e", "");
+        String resultText = "One number format is invalid";
+        String firstNumber = ctx.queryParam(FIRST_NUMBER_QUERY_VAR_NAME);
+        String secondNumber = ctx.queryParam(SECOND_NUMBER_QUERY_VAR_NAME);
         String operation = ctx.queryParam(OPERATION_QUERY_VAR_NAME);
 
-        if (!(firstNumber.isEmpty() && secondNumber.isEmpty())) {
+        if ((areValid(firstNumber, secondNumber))) {
             float result = Operation.from(operation).apply(
-                    parseFloat(firstNumber),
-                    parseFloat(secondNumber));
+                    toFloat(firstNumber),
+                    toFloat(secondNumber));
             resultText = String.valueOf(result);
         }
 
@@ -44,5 +44,17 @@ public class SimpleCalculator {
         OperationResult resultObj = new OperationResult(numbers, operation, resultText);
 
         ctx.result(jsonMapper.writeValueAsString(resultObj));
+    }
+
+    private static boolean areValid(String ...numbersAsText) {
+        return stream(numbersAsText).allMatch(SimpleCalculator::isValidNumber);
+    }
+
+    private static boolean isValidNumber(String numberAsText) {
+        return ! numberAsText.isEmpty() && numberAsText.matches("^\\d+$");
+    }
+
+    private static float toFloat(String number) {
+        return parseFloat(number.replace("e", ""));
     }
 }
