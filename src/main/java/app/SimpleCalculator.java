@@ -26,8 +26,6 @@ public class SimpleCalculator {
 
     @SneakyThrows
     public static void calculateHandler(Context ctx) {
-        log.info(ctx.method() + " " + ctx.fullUrl());
-
         String firstNumber = ctx.queryParam(FIRST_NUMBER_QUERY_VAR_NAME);
         String secondNumber = ctx.queryParam(SECOND_NUMBER_QUERY_VAR_NAME);
         String operation = ctx.queryParam(OPERATION_QUERY_VAR_NAME);
@@ -37,8 +35,7 @@ public class SimpleCalculator {
 
         List<String> numbers = asList(firstNumber, secondNumber);
         OperationResult resultObj = new OperationResult(numbers, operation, String.valueOf(result));
-
-        log.info(resultObj.toString());
+        
         ctx.result(jsonMapper.writeValueAsString(resultObj));
     }
 }

@@ -17,6 +17,10 @@ public class Server {
         Javalin app = Javalin.create(config -> {
                     config.addStaticFiles("html/css", Location.EXTERNAL);
                     config.addStaticFiles("html/js", Location.EXTERNAL);
+                    config.requestLogger((ctx, ms) -> {
+                        log.info(ctx.method() + " " + ctx.fullUrl());
+                        log.info(ms + " ms");
+                    });
                 }
         ).start(htmlPort);
         app.get("/", ctx -> ctx.html(getHtmlIndex()));
