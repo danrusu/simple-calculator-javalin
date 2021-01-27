@@ -19,41 +19,42 @@ public class SimpleCalculator {
     private static final String FIRST_NUMBER_QUERY_VAR_NAME = "firstNumber";
     private static final String SECOND_NUMBER_QUERY_VAR_NAME = "secondNumber";
     private static final String OPERATION_QUERY_VAR_NAME = "operation";
+    private static final String INVALID_NUMBER_FORMAT_MESSAGE = "One number format is invalid";
 
     private SimpleCalculator() {
     }
 
-    private static ObjectMapper jsonMapper = new ObjectMapper();
+    private static final ObjectMapper jsonMapper = new ObjectMapper();
 
     @SneakyThrows
-    public static void calculateHandler(Context ctx) {
-        String resultText = "One number format is invalid";
-        String firstNumber = ctx.queryParam(FIRST_NUMBER_QUERY_VAR_NAME);
-        String secondNumber = ctx.queryParam(SECOND_NUMBER_QUERY_VAR_NAME);
-        String operation = ctx.queryParam(OPERATION_QUERY_VAR_NAME);
+    public static void calculateHandler(final Context ctx) {
+        String resultText = INVALID_NUMBER_FORMAT_MESSAGE;
+        final String firstNumber = ctx.queryParam(FIRST_NUMBER_QUERY_VAR_NAME);
+        final String secondNumber = ctx.queryParam(SECOND_NUMBER_QUERY_VAR_NAME);
+        final String operation = ctx.queryParam(OPERATION_QUERY_VAR_NAME);
 
         if ((areValid(firstNumber, secondNumber))) {
-            float result = Operation.from(operation).apply(
+            final float result = Operation.from(operation).apply(
                     toFloat(firstNumber),
                     toFloat(secondNumber));
             resultText = String.valueOf(result);
         }
 
-        List<String> numbers = asList(firstNumber, secondNumber);
-        OperationResult resultObj = new OperationResult(numbers, operation, resultText);
+        final List<String> numbers = asList(firstNumber, secondNumber);
+        final OperationResult resultObj = new OperationResult(numbers, operation, resultText);
 
         ctx.result(jsonMapper.writeValueAsString(resultObj));
     }
 
-    private static boolean areValid(String ...numbersAsText) {
+    private static boolean areValid(final String... numbersAsText) {
         return stream(numbersAsText).allMatch(SimpleCalculator::isValidNumber);
     }
 
-    private static boolean isValidNumber(String numberAsText) {
-        return ! numberAsText.isEmpty() && numberAsText.matches("^\\d+$");
+    private static boolean isValidNumber(final String numberAsText) {
+        return !numberAsText.isEmpty() && numberAsText.matches("^\\d+$");
     }
 
-    private static float toFloat(String number) {
+    private static float toFloat(final String number) {
         return parseFloat(number.replace("e", ""));
     }
 }

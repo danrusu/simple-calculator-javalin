@@ -7,17 +7,17 @@ public enum Operation {
     MULTIPLICATION((a, b) -> a * b),
     DIVISION((a, b) -> a / b);
 
-    private BinaryOperator<Float> operator;
+    private final BinaryOperator<Float> operator;
 
-    Operation(BinaryOperator<Float> operator) {
+    Operation(final BinaryOperator<Float> operator) {
         this.operator = operator;
     }
 
-    public float apply(float a, float b) {
+    public float apply(final float a, final float b) {
         return operator.apply(a, b);
     }
 
-    public static Operation from(String operation) {
+    public static Operation from(final String operation) {
         switch (operation) {
             case "1":
                 return SUM;

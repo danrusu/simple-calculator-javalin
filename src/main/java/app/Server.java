@@ -11,15 +11,15 @@ import static java.lang.Integer.parseInt;
 @Slf4j
 public class Server {
 
-    public static void main(String[] args) {
-        Javalin app = Javalin
+    public static void main(final String[] args) {
+        final Javalin app = Javalin
                 .create(Server::configurationSetup)
                 .start(getPort());
 
         setRoutes(app);
     }
 
-    private static void configurationSetup(JavalinConfig config) {
+    private static void configurationSetup(final JavalinConfig config) {
         config.addStaticFiles("html/css", Location.EXTERNAL);
         config.addStaticFiles("html/js", Location.EXTERNAL);
         config.requestLogger((ctx, ms) -> {
@@ -29,13 +29,13 @@ public class Server {
     }
 
     private static int getPort() {
-        String herokuPort = System.getenv("PORT");
+        final String herokuPort = System.getenv("PORT");
         return herokuPort != null ?
                 parseInt(herokuPort)
                 : 7000;
     }
 
-    private static void setRoutes(Javalin app) {
+    private static void setRoutes(final Javalin app) {
         app.get("/", ctx -> ctx.html(getHtmlIndex()));
         app.get("/api/calculate", SimpleCalculator::calculateHandler);
     }
