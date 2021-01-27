@@ -27,8 +27,10 @@ public class SimpleCalculator {
     @SneakyThrows
     public static void calculateHandler(Context ctx) {
         String resultText = "One number input is empty";
-        String firstNumber = ctx.queryParam(FIRST_NUMBER_QUERY_VAR_NAME);
-        String secondNumber = ctx.queryParam(SECOND_NUMBER_QUERY_VAR_NAME);
+        String firstNumber = ctx.queryParam(FIRST_NUMBER_QUERY_VAR_NAME)
+                .replace("e", "");
+        String secondNumber = ctx.queryParam(SECOND_NUMBER_QUERY_VAR_NAME)
+                .replace("e", "");
         String operation = ctx.queryParam(OPERATION_QUERY_VAR_NAME);
 
         if (!(firstNumber.isEmpty() && secondNumber.isEmpty())) {
