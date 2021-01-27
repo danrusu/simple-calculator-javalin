@@ -251,7 +251,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>Main</mainClass>
+                            <mainClass>app.Server</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
