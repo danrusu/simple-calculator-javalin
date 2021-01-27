@@ -1,0 +1,1 @@
+web: java -jar ./target/banking-app-1.0-jar-with-dependencies.jar
