@@ -26,16 +26,21 @@ public class SimpleCalculator {
 
     @SneakyThrows
     public static void calculateHandler(Context ctx) {
+        String resultText = "One number input is empty";
         String firstNumber = ctx.queryParam(FIRST_NUMBER_QUERY_VAR_NAME);
         String secondNumber = ctx.queryParam(SECOND_NUMBER_QUERY_VAR_NAME);
         String operation = ctx.queryParam(OPERATION_QUERY_VAR_NAME);
-        float result = Operation.from(operation).apply(
-                parseFloat(firstNumber),
-                parseFloat(secondNumber));
+
+        if (!(firstNumber.isEmpty() && secondNumber.isEmpty())) {
+            float result = Operation.from(operation).apply(
+                    parseFloat(firstNumber),
+                    parseFloat(secondNumber));
+            resultText = String.valueOf(result);
+        }
 
         List<String> numbers = asList(firstNumber, secondNumber);
-        OperationResult resultObj = new OperationResult(numbers, operation, String.valueOf(result));
-        
+        OperationResult resultObj = new OperationResult(numbers, operation, resultText);
+
         ctx.result(jsonMapper.writeValueAsString(resultObj));
     }
 }
