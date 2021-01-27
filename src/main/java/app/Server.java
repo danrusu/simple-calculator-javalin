@@ -29,9 +29,10 @@ public class Server {
     }
 
     private static int getPort() {
-        String port = System.getenv("PORT");
-        int htmlPort = port != null ? parseInt(port) : 7000;
-        return htmlPort;
+        String herokuPort = System.getenv("PORT");
+        return herokuPort != null ?
+                parseInt(herokuPort)
+                : 7000;
     }
 
     private static void setRoutes(Javalin app) {
